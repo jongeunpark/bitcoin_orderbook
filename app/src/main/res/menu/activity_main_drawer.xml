@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/main_nav_help"
+            android:icon="@drawable/ic_help_outline_black_48dp"
+            android:title="@string/help" />
+        <item
+            android:id="@+id/main_nav_review"
+            android:icon="@drawable/ic_rate_review_black_48dp"
+            android:title="@string/comment" />
+        <item
+            android:id="@+id/main_nav_send"
+            android:icon="@drawable/ic_mail_outline_black_48dp"
+            android:title="@string/email" />
+        <item
+            android:id="@+id/main_nav_share"
+            android:icon="@drawable/ic_share_black_48dp"
+            android:title="@string/share" />
+
+    </group>
+
+    <item android:title="@string/direct">
+        <menu>
+            <item
+                android:id="@+id/main_nav_korbit"
+
+                android:title="@string/korbit" />
+            <item
+                android:id="@+id/main_nav_coinone"
+
+                android:title="@string/coinone" />
+            <item
+                android:id="@+id/main_nav_bithumb"
+
+                android:title="@string/bithumb" />
+        </menu>
+    </item>
+
+</menu>

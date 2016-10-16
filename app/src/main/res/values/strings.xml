@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">비트코인 오더북</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="powered">Powered by JP</string>
+    <string name="help">도움말 다시보기</string>
+
+    <string name="share">공유하기</string>
+    <string name="comment">리뷰남기기</string>
+    <string name="email">문의하기</string>
+    <string name="donation">기부하기</string>
+
+    <string name="direct">바로가기</string>
+    <string name="korbit">KORBIT</string>
+    <string name="coinone">COINONE</string>
+    <string name="bithumb">BITHUMB</string>
+    <string name="orderbook_title_ask_qty">매도잔량</string>
+    <string name="orderbook_title_bid_qty">매수잔량</string>
+    <string name="orderbook_title_price">주문가격</string>
+    <string name="main_summary_buy">최고가 사는 가격: %2$s (%1$s)</string>
+    <string name="main_summary_sell">최저가 파는 가격: %2$s (%1$s)</string>
+    <string name="main_summary_avg_buy">평균 매수 가격: %1$s</string>
+    <string name="main_summary_avg_sell">평균 매도 가격: %1$s</string>
+</resources>
