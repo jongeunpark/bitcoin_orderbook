@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.jp.app.bitcoin.orderbook.R;
@@ -40,7 +41,8 @@ public class OrderbookFragment extends Fragment {
     public static final int MARKET_TYPE_COINONE = 1;
     public static final int MARKET_TYPE_BITHUMB = 2;
 
-    private static final int MAX = 10;
+
+    private static final int MAX = 5;
     private WaveSwipeRefreshLayout mRefresh;
     private ListView mListView;
     private Context mContext;
@@ -71,6 +73,12 @@ public class OrderbookFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_orderbook, container, false);
         mMarketType = getArguments().getInt(MARKET_TYPE);
         mListView = (ListView) rootView.findViewById(R.id.orderbook_list);
+//        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//
+//            }
+//        });
         mRefresh = (WaveSwipeRefreshLayout) rootView.findViewById(R.id.orderbook_refresh);
 
         mRefresh.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
@@ -110,44 +118,43 @@ public class OrderbookFragment extends Fragment {
     }
 
     public void setOrderbooks(Orderbooks orderbooks) {
-       if(orderbooks != null && orderbooks.getAskArray().size()>MAX && orderbooks.getBidArray().size() >MAX){
-           Collections.sort(orderbooks.getAskArray(), new Comparator<Orderbook>() {
-               @Override
-               public int compare(Orderbook t1, Orderbook t2) {
+        if (orderbooks != null && orderbooks.getAskArray().size() > MAX && orderbooks.getBidArray().size() > MAX) {
+            Collections.sort(orderbooks.getAskArray(), new Comparator<Orderbook>() {
+                @Override
+                public int compare(Orderbook t1, Orderbook t2) {
 
-                   return t2.getPrice().compareTo(t1.getPrice());
-               }
-           });
+                    return t2.getPrice().compareTo(t1.getPrice());
+                }
+            });
 
-           Collections.sort(orderbooks.getBidArray(), new Comparator<Orderbook>() {
-               @Override
-               public int compare(Orderbook t1, Orderbook t2) {
-                   return t2.getPrice().compareTo(t1.getPrice());
-               }
-           });
+            Collections.sort(orderbooks.getBidArray(), new Comparator<Orderbook>() {
+                @Override
+                public int compare(Orderbook t1, Orderbook t2) {
+                    return t2.getPrice().compareTo(t1.getPrice());
+                }
+            });
 
-           orderItemList = new ArrayList<OrderItem>();
-           int end = orderbooks.getAskArray().size();
-           int start = end - MAX;
+            orderItemList = new ArrayList<OrderItem>();
+            int end = orderbooks.getAskArray().size();
+            int start = end - MAX;
 
-           for (Orderbook orderbook : orderbooks.getAskArray().subList(start, end)) {
+            for (Orderbook orderbook : orderbooks.getAskArray().subList(start, end)) {
 
 
-               orderItemList.add(new OrderItem(orderbook.getPrice(), orderbook.getQty(), OrderItem.ORDER_TYPE.ASK));
-           }
-           start = 0;
-           end = MAX;
-           for (Orderbook orderbook : orderbooks.getBidArray().subList(start, end)) {
+                orderItemList.add(new OrderItem(orderbook.getPrice(), orderbook.getQty(), OrderItem.ORDER_TYPE.ASK));
+            }
+            start = 0;
+            end = MAX;
+            for (Orderbook orderbook : orderbooks.getBidArray().subList(start, end)) {
 
-               orderItemList.add(new OrderItem(orderbook.getPrice(), orderbook.getQty(), OrderItem.ORDER_TYPE.BID));
-           }
-           if (isAdded()) {
-               mAdapter = new OrderbookAdapter(getActivity(), R.layout.row_orderbook, orderItemList);
-               mListView.setAdapter(mAdapter);
-               moveCenter();
-           }
+                orderItemList.add(new OrderItem(orderbook.getPrice(), orderbook.getQty(), OrderItem.ORDER_TYPE.BID));
+            }
+            if (isAdded()) {
+                mAdapter = new OrderbookAdapter(getActivity(), R.layout.row_orderbook, orderItemList);
+                mListView.setAdapter(mAdapter);
+                moveCenter();
+            }
         }
-
 
 
     }
@@ -162,7 +169,7 @@ public class OrderbookFragment extends Fragment {
 
     private void moveCenter() {
 
-        mListView.setSelection(7);
+
     }
 
     @Override
@@ -170,5 +177,13 @@ public class OrderbookFragment extends Fragment {
 
         super.onAttach(context);
         mContext = context;
+    }
+
+    public void reset() {
+        orderItemList = null;
+        if (mAdapter != null) {
+            mAdapter.clear();
+            mAdapter.notifyDataSetChanged();
+        }
     }
 }

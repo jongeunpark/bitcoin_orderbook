@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
+import com.jp.app.bitcoin.orderbook.BuildConfig;
 import com.jp.app.bitcoin.orderbook.R;
 
 import io.fabric.sdk.android.Fabric;
@@ -18,7 +20,8 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
+        Fabric.with(this, new Crashlytics.Builder().core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build()).build());
+
 
 
 

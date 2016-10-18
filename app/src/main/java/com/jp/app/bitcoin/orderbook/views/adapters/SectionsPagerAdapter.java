@@ -28,34 +28,36 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        // Show 3 total pages.
-        return 3;
+
+        return mFragments.length;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
         switch (position) {
-            case 0:
+            case OrderbookFragment.MARKET_TYPE_KORBIT:
                 return MainActivity.KORBIT;
-            case 1:
+            case OrderbookFragment.MARKET_TYPE_COINONE:
                 return MainActivity.COINONE;
-            case 2:
+            case OrderbookFragment.MARKET_TYPE_BITHUMB:
                 return MainActivity.BITHUMB;
+
         }
         return null;
     }
 
     public void setmKorbitOrderbooks(Orderbooks orderbooks) {
-        mFragments[0].setOrderbooks(orderbooks);
+        mFragments[OrderbookFragment.MARKET_TYPE_KORBIT].setOrderbooks(orderbooks);
     }
 
     public void setmCoinoneOrderbooks(Orderbooks orderbooks) {
-        mFragments[1].setOrderbooks(orderbooks);
+        mFragments[OrderbookFragment.MARKET_TYPE_COINONE].setOrderbooks(orderbooks);
     }
 
     public void setmBithumbOrderbooks(Orderbooks orderbooks) {
-        mFragments[2].setOrderbooks(orderbooks);
+        mFragments[OrderbookFragment.MARKET_TYPE_BITHUMB].setOrderbooks(orderbooks);
     }
+
 
 
 }

@@ -3,38 +3,34 @@ package com.jp.app.bitcoin.orderbook.activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.crashlytics.android.Crashlytics;
 import com.jp.app.bitcoin.orderbook.R;
 import com.jp.app.bitcoin.orderbook.anims.ActivityAnimator;
 import com.jp.app.bitcoin.orderbook.fragments.OrderbookFragment;
 import com.jp.app.bitcoin.orderbook.views.adapters.SectionsPagerAdapter;
-
-import io.fabric.sdk.android.Fabric;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import jp.com.lib.orderbook.network.datas.Orderbook;
 import jp.com.lib.orderbook.network.datas.Orderbooks;
 import jp.com.lib.orderbook.network.listeners.OrderBookArrayListener;
 import jp.com.lib.orderbook.network.services.BithumbPublicApiImpl;
@@ -51,6 +47,7 @@ public class MainActivity extends BaseActivity
     public static final String KORBIT = "KORBIT";
     public static final String COINONE = "COINONE";
     public static final String BITHUMB = "BITHUMB";
+    public static final String OKCOIN = "OKCOIN.CN";
     private static final int HELP_ACTIVITY_REQUESTCODE = 101;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -71,6 +68,7 @@ public class MainActivity extends BaseActivity
     private TextView mTextAvgSell;
     private TextView mTextAvgBuy;
     private TextView mTextTitle;
+    private boolean isLoading = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,6 +141,25 @@ public class MainActivity extends BaseActivity
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.mene_main, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menu_main_refresh:
+                getOrderbook();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -281,9 +298,23 @@ public class MainActivity extends BaseActivity
     }
 
     private void getOrderbook() {
+        if(isLoading){
+            return;
+        }
+        isLoading = true;
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+              isLoading = false;
+            }
+        },1000);
+        mBithumbFragment.reset();
+        mCoinoneFragment.reset();
+        mKorbitFragment.reset();
         getCoinoneOrderbook();
         getBithumbOrderbook();
         getKorbitOrderbook();
+
 
     }
 
