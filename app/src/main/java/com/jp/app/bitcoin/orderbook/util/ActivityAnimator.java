@@ -1,4 +1,4 @@
-package com.jp.app.bitcoin.orderbook.anims;
+package com.jp.app.bitcoin.orderbook.util;
 
 
 import android.app.Activity;

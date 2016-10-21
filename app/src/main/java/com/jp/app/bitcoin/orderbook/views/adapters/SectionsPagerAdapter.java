@@ -3,10 +3,13 @@ package com.jp.app.bitcoin.orderbook.views.adapters;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.util.Log;
 
-import com.jp.app.bitcoin.orderbook.activities.MainActivity;
-import com.jp.app.bitcoin.orderbook.fragments.OrderbookFragment;
+import com.jp.app.bitcoin.orderbook.main.MainActivity;
+import com.jp.app.bitcoin.orderbook.orderbook.OrderbookFragment;
+import com.jp.app.bitcoin.orderbook.orderbook.OrderbookPresenter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import jp.com.lib.orderbook.network.datas.Orderbooks;
 
@@ -15,15 +18,22 @@ import jp.com.lib.orderbook.network.datas.Orderbooks;
  */
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
     private OrderbookFragment[] mFragments;
+    private List<OrderbookPresenter> mPresenters;
 
     public SectionsPagerAdapter(FragmentManager fm, OrderbookFragment[] fragments) {
         super(fm);
         mFragments = fragments;
+        mPresenters = new ArrayList<>();
+
+        for (OrderbookFragment fragment : fragments) {
+            mPresenters.add(new OrderbookPresenter(fragment));
+        }
+
     }
 
     @Override
     public Fragment getItem(int position) {
-       return mFragments[position];
+        return mFragments[position];
     }
 
     @Override
@@ -46,18 +56,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         return null;
     }
 
-    public void setmKorbitOrderbooks(Orderbooks orderbooks) {
-        mFragments[OrderbookFragment.MARKET_TYPE_KORBIT].setOrderbooks(orderbooks);
+    public void setOrderbooks(int marketType, Orderbooks orderbooks) {
+        mPresenters.get(marketType).setOrderbook(orderbooks);
     }
-
-    public void setmCoinoneOrderbooks(Orderbooks orderbooks) {
-        mFragments[OrderbookFragment.MARKET_TYPE_COINONE].setOrderbooks(orderbooks);
-    }
-
-    public void setmBithumbOrderbooks(Orderbooks orderbooks) {
-        mFragments[OrderbookFragment.MARKET_TYPE_BITHUMB].setOrderbooks(orderbooks);
-    }
-
 
 
 }

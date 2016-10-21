@@ -1,4 +1,4 @@
-package com.jp.app.bitcoin.orderbook.models;
+package com.jp.app.bitcoin.orderbook.data;
 
 import java.math.BigDecimal;
 

@@ -48,10 +48,7 @@
         android:layout_height="1dp"
         android:background="@color/divider" />
 
-    <jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout
-        android:id="@+id/orderbook_refresh"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
 
         <ListView
             android:id="@+id/orderbook_list"
@@ -60,7 +57,7 @@
             android:divider="@null"
             android:dividerHeight="0dp"
             android:fadingEdge="none" />
-    </jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout>
+
 
 
 </LinearLayout>

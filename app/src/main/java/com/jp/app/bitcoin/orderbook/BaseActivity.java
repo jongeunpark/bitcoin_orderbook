@@ -1,4 +1,4 @@
-package com.jp.app.bitcoin.orderbook.activities;
+package com.jp.app.bitcoin.orderbook;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,9 +21,6 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics.Builder().core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build()).build());
-
-
-
 
     }
 
