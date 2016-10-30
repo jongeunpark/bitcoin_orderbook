@@ -9,11 +9,13 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.jp.app.bitcoin.orderbook.BaseActivity;
 import com.jp.app.bitcoin.orderbook.R;
 import com.jp.app.bitcoin.orderbook.help.HelpActivity;
@@ -75,6 +77,7 @@ public class MainActivity extends BaseActivity
 
             title.setText(getString(getApplicationInfo().labelRes));
         }
+
     }
 
 

@@ -9,20 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.jp.app.bitcoin.orderbook.R;
-import com.jp.app.bitcoin.orderbook.main.MainActivity;
-import com.jp.app.bitcoin.orderbook.data.OrderItem;
-import com.jp.app.bitcoin.orderbook.main.MainFragment;
 import com.jp.app.bitcoin.orderbook.views.adapters.OrderbookAdapter;
 
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-
-import jp.com.lib.orderbook.network.datas.Orderbook;
-import jp.com.lib.orderbook.network.datas.Orderbooks;
+import com.jp.app.bitcoin.orderbook.data.OrderItem;
 
 /**
  * Created by jp on 16. 10. 12..
@@ -74,8 +66,9 @@ public class OrderbookFragment extends Fragment implements OrderbookContract.Vie
         mMarketType = getArguments().getInt(MARKET_TYPE);
         mListView = (ListView) rootView.findViewById(R.id.orderbook_list);
 
-
-        mPresenter.drawListAvailable();
+        if(mPresenter != null) {
+            mPresenter.drawListAvailable();
+        }
 
 
         return rootView;

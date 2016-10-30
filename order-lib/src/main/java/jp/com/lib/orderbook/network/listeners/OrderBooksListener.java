@@ -5,7 +5,7 @@ import jp.com.lib.orderbook.network.datas.Orderbooks;
 /**
  * Created by jp on 16. 10. 12..
  */
-public interface OrderBookArrayListener extends BaseNetworkListener{
+public interface OrderBooksListener extends BaseNetworkListener{
     void onSuccess(Orderbooks orderbooks);
 
 }

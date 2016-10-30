@@ -8,9 +8,10 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.jp.app.bitcoin.orderbook.R;
-import com.jp.app.bitcoin.orderbook.data.OrderItem;
 
 import java.util.List;
+
+import com.jp.app.bitcoin.orderbook.data.OrderItem;
 
 /**
  * Created by jp on 16. 10. 14..

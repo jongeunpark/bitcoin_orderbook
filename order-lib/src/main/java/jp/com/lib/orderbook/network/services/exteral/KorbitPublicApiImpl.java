@@ -1,7 +1,6 @@
-package jp.com.lib.orderbook.network.services;
+package jp.com.lib.orderbook.network.services.exteral;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -15,7 +14,8 @@ import cz.msebera.android.httpclient.Header;
 import jp.com.lib.orderbook.network.HttpSender;
 import jp.com.lib.orderbook.network.datas.Orderbook;
 import jp.com.lib.orderbook.network.datas.Orderbooks;
-import jp.com.lib.orderbook.network.listeners.OrderBookArrayListener;
+import jp.com.lib.orderbook.network.listeners.OrderBooksListener;
+import jp.com.lib.orderbook.network.services.Constants;
 
 /**
  * Created by jp on 16. 10. 12..
@@ -23,6 +23,7 @@ import jp.com.lib.orderbook.network.listeners.OrderBookArrayListener;
 public class KorbitPublicApiImpl implements PublickApi {
     private static final String BASE_URL = "https://api.korbit.co.kr/v1/";
     private static final String ORDERBOOK_URL = "orderbook";
+    private static final String INTERAL_ORDERBOOK_URL = "markets/coinone";
 
     private static Context mContext;
     private static KorbitPublicApiImpl mPublicAPI;
@@ -40,7 +41,57 @@ public class KorbitPublicApiImpl implements PublickApi {
     }
 
     @Override
-    public Orderbooks getOrderbook(final OrderBookArrayListener listener) throws Exception {
+    public void getInteralOrderbook(final OrderBooksListener listener) throws Exception {
+        JsonHttpResponseHandler jsonHttpResponseHandler = new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers,
+                                  JSONObject response) {
+                try {
+
+
+                    JSONArray datas = response.getJSONArray("data");
+                    Orderbooks orderbooks = new Orderbooks();
+                    for (int i = 0; i < datas.length(); i++) {
+                        JSONObject data = datas.getJSONObject(i);
+                        BigDecimal qty = new BigDecimal(data.getString("qty"));
+                        BigDecimal price = new BigDecimal(data.getString("price"));
+                        String type = data.getString("type");
+                        Orderbook orderbook = new Orderbook();
+                        orderbook.setPrice(price);
+                        orderbook.setQty(qty);
+                        if(type.equals("ask")){
+                            orderbooks.addAsk(orderbook);
+                        }else if(type.equals("bid")){
+                            orderbooks.addBid(orderbook);
+                        }
+                    }
+
+
+
+                    listener.onSuccess(orderbooks);
+
+                } catch (JSONException e) {
+                    listener.onFailure(statusCode, e);
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers,
+                                  Throwable throwable, JSONObject jsonObject) {
+                listener.onFailure(statusCode, throwable);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String error, Throwable throwable) {
+                listener.onFailure(statusCode, throwable);
+            }
+        };
+        HttpSender.sendGetRequest(Constants.INTERAL_BASE_URL + "" + INTERAL_ORDERBOOK_URL, jsonHttpResponseHandler);
+    }
+
+    @Override
+    public void getOrderbook(final OrderBooksListener listener) throws Exception {
         JsonHttpResponseHandler jsonHttpResponseHandler = new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers,
@@ -93,6 +144,6 @@ public class KorbitPublicApiImpl implements PublickApi {
             }
         };
         HttpSender.sendGetRequest(BASE_URL + "" + ORDERBOOK_URL, jsonHttpResponseHandler);
-        return null;
+
     }
 }

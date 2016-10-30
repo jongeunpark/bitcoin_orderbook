@@ -2,10 +2,10 @@ package com.jp.app.bitcoin.orderbook.orderbook;
 
 import com.jp.app.bitcoin.orderbook.BasePresenter;
 import com.jp.app.bitcoin.orderbook.BaseView;
-import com.jp.app.bitcoin.orderbook.data.OrderItem;
 
 import java.util.List;
 
+import com.jp.app.bitcoin.orderbook.data.OrderItem;
 import jp.com.lib.orderbook.network.datas.Orderbooks;
 
 /**

@@ -3,18 +3,15 @@ package com.jp.app.bitcoin.orderbook.data;
 import java.math.BigDecimal;
 
 /**
- * Created by jp on 16. 10. 13..
+ * Created by jp on 16. 10. 24..
  */
 public class OrderItem {
-
     private BigDecimal price;
     private BigDecimal qty;
     private ORDER_TYPE order_type;
     public static enum ORDER_TYPE{
         BID, ASK
     };
-
-
     public OrderItem(BigDecimal price, BigDecimal qty, ORDER_TYPE order_type){
         this.price = price;
         this.qty = qty;
@@ -43,10 +40,4 @@ public class OrderItem {
     public void setOrder_type(ORDER_TYPE order_type) {
         this.order_type = order_type;
     }
-
-
-
-
-
-
 }

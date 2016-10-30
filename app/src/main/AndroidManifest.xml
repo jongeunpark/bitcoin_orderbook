@@ -26,7 +26,20 @@
             android:theme="@style/Theme.AppCompat.Translucent">
 
         </activity>
-
+        <service
+            android:name=".services.firebases.FirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <!-- [END firebase_service] -->
+        <!-- [START firebase_iid_service] -->
+        <service
+            android:name=".services.firebases.FirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="f10fc382e04265963b4775a151e677abaae7147e" />

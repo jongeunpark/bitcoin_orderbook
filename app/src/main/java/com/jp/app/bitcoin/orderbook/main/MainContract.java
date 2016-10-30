@@ -41,6 +41,12 @@ public interface MainContract {
 
         void getOrderbook(Context context);
 
+        void getInteralCoinoneOrderbook(Context context);
+
+        void getInteralBithumbOrderbook(Context context);
+
+        void getInteralKorbitOrderbook(Context context);
+
         void getCoinoneOrderbook(Context context);
 
         void getBithumbOrderbook(Context context);

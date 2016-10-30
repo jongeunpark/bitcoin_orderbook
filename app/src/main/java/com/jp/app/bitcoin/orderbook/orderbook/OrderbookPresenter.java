@@ -2,16 +2,12 @@ package com.jp.app.bitcoin.orderbook.orderbook;
 
 import android.support.annotation.NonNull;
 
-import com.jp.app.bitcoin.orderbook.R;
-import com.jp.app.bitcoin.orderbook.data.OrderItem;
-import com.jp.app.bitcoin.orderbook.main.MainContract;
-import com.jp.app.bitcoin.orderbook.views.adapters.OrderbookAdapter;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import com.jp.app.bitcoin.orderbook.data.OrderItem;
 import jp.com.lib.orderbook.network.datas.Orderbook;
 import jp.com.lib.orderbook.network.datas.Orderbooks;
 
@@ -37,7 +33,7 @@ public class OrderbookPresenter implements OrderbookContract.Presenter {
 
     @Override
     public void setOrderbook(Orderbooks orderbooks) {
-        if (orderbooks != null && orderbooks.getAskArray().size() > MAX && orderbooks.getBidArray().size() > MAX) {
+        if (orderbooks != null && orderbooks.getAskArray().size() >= MAX && orderbooks.getBidArray().size() >= MAX) {
             Collections.sort(orderbooks.getAskArray(), new Comparator<Orderbook>() {
                 @Override
                 public int compare(Orderbook t1, Orderbook t2) {

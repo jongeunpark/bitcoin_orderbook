@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.jp.app.bitcoin.orderbook.orderbook.OrderbookFragment;
 
@@ -13,11 +14,11 @@ import java.util.Comparator;
 import java.util.List;
 
 import jp.com.lib.orderbook.network.datas.Orderbooks;
-import jp.com.lib.orderbook.network.listeners.OrderBookArrayListener;
-import jp.com.lib.orderbook.network.services.BithumbPublicApiImpl;
-import jp.com.lib.orderbook.network.services.CoinonePublicApiImpl;
-import jp.com.lib.orderbook.network.services.KorbitPublicApiImpl;
-import jp.com.lib.orderbook.network.services.PublickApi;
+import jp.com.lib.orderbook.network.listeners.OrderBooksListener;
+import jp.com.lib.orderbook.network.services.exteral.BithumbPublicApiImpl;
+import jp.com.lib.orderbook.network.services.exteral.CoinonePublicApiImpl;
+import jp.com.lib.orderbook.network.services.exteral.KorbitPublicApiImpl;
+import jp.com.lib.orderbook.network.services.exteral.PublickApi;
 
 /**
  * Created by jp on 16. 10. 21..
@@ -60,7 +61,6 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
 
-
     @Override
     public OrderbookFragment[] generateFragments() {
         mKorbitFragment = OrderbookFragment.newInstance(OrderbookFragment.MARKET_TYPE_KORBIT);
@@ -69,7 +69,6 @@ public class MainPresenter implements MainContract.Presenter {
 
         return new OrderbookFragment[]{mKorbitFragment, mCoinoneFragment, mBithumbFragment};
     }
-
 
 
     @Override
@@ -87,18 +86,115 @@ public class MainPresenter implements MainContract.Presenter {
         mBithumbFragment.clearData();
         mCoinoneFragment.clearData();
         mKorbitFragment.clearData();
+
+//        getInteralCoinoneOrderbook(context);
+//        getInteralBithumbOrderbook(context);
+//        getInteralKorbitOrderbook(context);
         getCoinoneOrderbook(context);
         getBithumbOrderbook(context);
         getKorbitOrderbook(context);
     }
 
     @Override
-    public void getCoinoneOrderbook(Context context) {
+    public void getInteralCoinoneOrderbook(final Context context) {
+        PublickApi coinonePublickApi = CoinonePublicApiImpl.getInstance(context);
+        try {
+
+            coinonePublickApi.getInteralOrderbook(new OrderBooksListener() {
+                @Override
+                public void onSuccess(Orderbooks orderbooks) {
+
+                    if (orderbooks != null && orderbooks.getBidArray().size() > 0 && orderbooks.getAskArray().size() > 0) {
+                        mMainView.drawOrderbook(OrderbookFragment.MARKET_TYPE_COINONE, orderbooks);
+
+                        orderbooks.sort();
+                        minPriceInCoinone = orderbooks.getAskArray().get(0).getPrice().longValue();
+                        maxPriceInCoinone = orderbooks.getBidArray().get(0).getPrice().longValue();
+                        calSummary();
+
+                    }
+                }
+
+                @Override
+                public void onFailure(int httpStatusCode, Throwable throwable) {
+                    getCoinoneOrderbook(context);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void getInteralBithumbOrderbook(final Context context) {
+        PublickApi bithumbPublicAPI = BithumbPublicApiImpl.getInstance(context);
+        try {
+            bithumbPublicAPI.getInteralOrderbook(new OrderBooksListener() {
+                @Override
+                public void onSuccess(Orderbooks orderbooks) {
+                    if (orderbooks != null && orderbooks.getBidArray().size() > 0 && orderbooks.getAskArray().size() > 0) {
+                        mMainView.drawOrderbook(OrderbookFragment.MARKET_TYPE_BITHUMB, orderbooks);
+
+                        orderbooks.sort();
+                        minPriceInBithumb = orderbooks.getAskArray().get(0).getPrice().longValue();
+                        maxPriceInBithumb = orderbooks.getBidArray().get(0).getPrice().longValue();
+                        calSummary();
+
+                    }
+
+                }
+
+                @Override
+                public void onFailure(int httpStatusCode, Throwable throwable) {
+                    getBithumbOrderbook(context);
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void getInteralKorbitOrderbook(final Context context) {
+        PublickApi korbitPublickApi = KorbitPublicApiImpl.getInstance(context);
+        try {
+
+            korbitPublickApi.getInteralOrderbook(new OrderBooksListener() {
+                @Override
+                public void onSuccess(Orderbooks orderbooks) {
+                    if (orderbooks != null && orderbooks.getBidArray().size() > 0 && orderbooks.getAskArray().size() > 0) {
+                        mMainView.drawOrderbook(OrderbookFragment.MARKET_TYPE_KORBIT, orderbooks);
+
+                        orderbooks.sort();
+
+                        minPriceInKorbit = orderbooks.getAskArray().get(0).getPrice().longValue();
+                        maxPriceInKorbit = orderbooks.getBidArray().get(0).getPrice().longValue();
+                        calSummary();
+
+
+                    }
+                }
+
+                @Override
+                public void onFailure(int httpStatusCode, Throwable throwable) {
+                    getKorbitOrderbook(context);
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Override
+    public void getCoinoneOrderbook(final Context context) {
 
         PublickApi coinonePublickApi = CoinonePublicApiImpl.getInstance(context);
         try {
 
-            coinonePublickApi.getOrderbook(new OrderBookArrayListener() {
+            coinonePublickApi.getOrderbook(new OrderBooksListener() {
                 @Override
                 public void onSuccess(Orderbooks orderbooks) {
                     if (orderbooks != null && orderbooks.getBidArray().size() > 0 && orderbooks.getAskArray().size() > 0) {
@@ -123,10 +219,10 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void getBithumbOrderbook(Context context) {
+    public void getBithumbOrderbook(final Context context) {
         PublickApi bithumbPublicAPI = BithumbPublicApiImpl.getInstance(context);
         try {
-            bithumbPublicAPI.getOrderbook(new OrderBookArrayListener() {
+            bithumbPublicAPI.getOrderbook(new OrderBooksListener() {
                 @Override
                 public void onSuccess(Orderbooks orderbooks) {
                     if (orderbooks != null && orderbooks.getBidArray().size() > 0 && orderbooks.getAskArray().size() > 0) {
@@ -157,7 +253,7 @@ public class MainPresenter implements MainContract.Presenter {
         PublickApi korbitPublickApi = KorbitPublicApiImpl.getInstance(context);
         try {
 
-            korbitPublickApi.getOrderbook(new OrderBookArrayListener() {
+            korbitPublickApi.getOrderbook(new OrderBooksListener() {
                 @Override
                 public void onSuccess(Orderbooks orderbooks) {
                     if (orderbooks != null && orderbooks.getBidArray().size() > 0 && orderbooks.getAskArray().size() > 0) {
@@ -252,13 +348,10 @@ public class MainPresenter implements MainContract.Presenter {
             max = maxs.get(0).price;
             maxMarket = maxs.get(0).marketName;
 
-
-            mMainView.setTextMaxBuy(maxMarket,max);
-            mMainView.setTextAvgBuy( avg / maxs.size());
-
-
-
-
+            if(mMainView.isActive()) {
+                mMainView.setTextMaxBuy(maxMarket, max);
+                mMainView.setTextAvgBuy(avg / maxs.size());
+            }
 
 
         }
@@ -269,11 +362,10 @@ public class MainPresenter implements MainContract.Presenter {
             }
             min = mins.get(0).price;
             minMarket = mins.get(0).marketName;
-            mMainView.setTextMinSell(minMarket,min);
-            mMainView.setTextAvgSell( avg / mins.size());
-
-
-
+            if(mMainView.isActive()) {
+                mMainView.setTextMinSell(minMarket, min);
+                mMainView.setTextAvgSell(avg / mins.size());
+            }
 
         }
     }
