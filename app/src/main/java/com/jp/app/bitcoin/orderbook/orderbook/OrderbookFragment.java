@@ -55,7 +55,9 @@ public class OrderbookFragment extends Fragment implements OrderbookContract.Vie
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.start();
+        if(mPresenter!= null) {
+            mPresenter.start();
+        }
     }
 
     @Override
