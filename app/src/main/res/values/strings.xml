@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">비트코인 오더북</string>
-
+    <string name="banner_ad_unit_id">ca-app-pub-6722966527757194/9915256669</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="powered">Powered by JP</string>
     <string name="help">도움말 다시보기</string>
+
 
     <string name="share">공유하기</string>
     <string name="comment">리뷰남기기</string>

@@ -9,7 +9,7 @@ buildscript {
 }
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
-apply plugin: 'com.google.gms.google-services'
+
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.1"
@@ -18,8 +18,8 @@ android {
         applicationId "com.jp.app.bitcoin.orderbook"
         minSdkVersion 14
         targetSdkVersion 24
-        versionCode 7
-        versionName "1.1.5"
+        versionCode 8
+        versionName "1.1.6"
     }
     buildTypes {
         release {
@@ -40,7 +40,9 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.0'
     compile 'com.android.support:design:24.2.0'
     compile 'com.google.firebase:firebase-messaging:9.0.2'
+    compile 'com.google.firebase:firebase-ads:9.0.2'
     compile "com.google.guava:guava:18.0"
+
     compile project(':order-lib')
     compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
         transitive = true;
