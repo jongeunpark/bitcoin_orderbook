@@ -44,6 +44,7 @@ dependencies {
     compile "com.google.guava:guava:18.0"
     compile 'com.github.chenupt.android:springindicator:1.0.2@aar'
     compile project(':order-lib')
+    compile 'com.github.ViksaaSkool:AwesomeSplash:v1.0.0'
     compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
         transitive = true;
     }

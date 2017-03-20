@@ -34,7 +34,7 @@ public class MainActivity extends BaseActivity
     public static final String KORBIT = "KORBIT";
     public static final String COINONE = "COINONE";
     public static final String BITHUMB = "BITHUMB";
-    private InterstitialAd mInterstitialAd;
+
 
     public static final int HELP_ACTIVITY_REQUESTCODE = 101;
     private MainPresenter mainPresenter;
@@ -45,18 +45,7 @@ public class MainActivity extends BaseActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.main_act);
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-6722966527757194/4352411868");
 
-        mInterstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                requestNewInterstitial();
-                finishMyApp();
-            }
-        });
-
-        requestNewInterstitial();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -96,27 +85,17 @@ public class MainActivity extends BaseActivity
         }
 
 
-        requestNewInterstitial();
-
-    }
-    private void requestNewInterstitial() {
-        AdRequest adRequest = new AdRequest.Builder().build();
-
-        mInterstitialAd.loadAd(adRequest);
-
     }
 
     @Override
     public void onBackPressed() {
 
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        } else {
 
-            finishMyApp();
-        }
+        finishMyApp();
+
     }
-    public void finishMyApp(){
+
+    public void finishMyApp() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -160,14 +139,14 @@ public class MainActivity extends BaseActivity
         } else if (id == R.id.main_nav_send) {
             openEmailApp();
         } else if (id == R.id.main_nav_korbit) {
-            openWeb( "https://www.korbit.co.kr/");
+            openWeb("https://www.korbit.co.kr/");
         } else if (id == R.id.main_nav_coinone) {
-            openWeb( "https://coinone.co.kr/");
+            openWeb("https://coinone.co.kr/");
         } else if (id == R.id.main_nav_bithumb) {
-            openWeb( "https://www.bithumb.com/");
-        } else if (id == R.id.main_nav_etc_orderbook){
+            openWeb("https://www.bithumb.com/");
+        } else if (id == R.id.main_nav_etc_orderbook) {
             openEtcOrderbook();
-        } else if (id == R.id.main_nav_eth_orderbook){
+        } else if (id == R.id.main_nav_eth_orderbook) {
             openEthOrderbook();
         }
 
@@ -175,12 +154,13 @@ public class MainActivity extends BaseActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    private void openEthOrderbook(){
+
+    private void openEthOrderbook() {
         try {
             Intent intent = getPackageManager().getLaunchIntentForPackage("com.jp.app.ethereum.orderbook");
 
             startActivity(intent);
-        }catch(Exception e){
+        } catch (Exception e) {
             try {
                 Intent intent2 = new Intent(Intent.ACTION_VIEW);
                 intent2.setData(Uri
@@ -193,12 +173,13 @@ public class MainActivity extends BaseActivity
         }
 
     }
-    private void openEtcOrderbook(){
+
+    private void openEtcOrderbook() {
         try {
             Intent intent = getPackageManager().getLaunchIntentForPackage("com.jp.app.etc.orderbook");
 
             startActivity(intent);
-        }catch(Exception e){
+        } catch (Exception e) {
             try {
                 Intent intent2 = new Intent(Intent.ACTION_VIEW);
                 intent2.setData(Uri
@@ -211,6 +192,7 @@ public class MainActivity extends BaseActivity
         }
 
     }
+
     public void openHelp() {
         startActivityForResult(new Intent(this, HelpActivity.class), MainActivity.HELP_ACTIVITY_REQUESTCODE);
         ActivityAnimator a = new ActivityAnimator();
