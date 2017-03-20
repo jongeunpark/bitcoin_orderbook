@@ -24,11 +24,10 @@
         android:layout_width="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary">
+        android:background="@color/primary">
         <fragment
             android:id="@+id/main_adFragment"
             class="com.jp.app.bitcoin.orderbook.AdFragment"
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true" />

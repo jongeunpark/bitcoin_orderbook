@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="#313332"
 
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".main.MainActivity"
@@ -28,48 +28,58 @@
             android:paddingRight="4dp">
 
 
-
-
             <TextView
                 android:id="@+id/main_summary_sell"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                android:textColor="@color/primary_text"
-                android:textSize="16dp" />
-            <TextView
-                android:id="@+id/main_summary_avg_sell"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-
-                android:alpha="0.8"
+                android:textStyle="bold"
                 android:textColor="@color/primary_text"
                 android:textSize="14dp" />
 
             <TextView
-                android:layout_marginTop="16dp"
-                android:id="@+id/main_summary_buy"
+                android:id="@+id/main_summary_avg_sell"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
 
+                android:alpha="0.8"
                 android:textColor="@color/primary_text"
-                android:textSize="16dp" />
+                android:textSize="13dp" />
 
+            <TextView
+                android:id="@+id/main_summary_buy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+
+
+                android:textColor="@color/primary_text"
+                android:textStyle="bold"
+                android:textSize="14dp" />
 
 
             <TextView
                 android:id="@+id/main_summary_avg_buy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
+
                 android:alpha="0.8"
                 android:textColor="@color/primary_text"
-                android:textSize="14dp" />
+                android:textSize="13dp" />
 
 
         </LinearLayout>
+
+        <github.chenupt.springindicator.SpringIndicator xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/main_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@color/primary"
+            app:siIndicatorColor="@color/accent"
+
+            app:siSelectedTextColor="@android:color/white"
+            app:siTextColor="@android:color/white"
+            app:siTextSize="16dp" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/main_viewpager_container"
@@ -78,15 +88,7 @@
 
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <android.support.v4.view.PagerTitleStrip
-                android:id="@+id/main_pager_title_strip"
-                style="@style/viewPagerTitleStrip"
-                android:layout_width="match_parent"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:layout_height="wrap_content"
 
-                android:background="@color/colorAccent" />
         </android.support.v4.view.ViewPager>
     </LinearLayout>
 

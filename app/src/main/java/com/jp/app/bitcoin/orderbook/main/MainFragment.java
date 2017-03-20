@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.jp.app.bitcoin.orderbook.R;
 import com.jp.app.bitcoin.orderbook.views.adapters.SectionsPagerAdapter;
 
+import github.chenupt.springindicator.SpringIndicator;
 import jp.com.lib.orderbook.network.datas.Orderbooks;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -26,7 +27,7 @@ public class MainFragment extends Fragment implements MainContract.View {
     private MainContract.Presenter mPresenter;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
-
+    private SpringIndicator mSpringIndicator;
     private TextView mTextMinSell;
     private TextView mTextMaxBuy;
     private TextView mTextAvgSell;
@@ -51,9 +52,10 @@ public class MainFragment extends Fragment implements MainContract.View {
         View root = inflater.inflate(R.layout.main_frag, container, false);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getActivity().getSupportFragmentManager(), mPresenter.generateFragments());
 
-
+        mSpringIndicator = (SpringIndicator) root.findViewById(R.id.main_indicator);
         mViewPager = (ViewPager) root.findViewById(R.id.main_viewpager_container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mSpringIndicator.setViewPager(mViewPager);
         mTextMaxBuy = (TextView) root.findViewById(R.id.main_summary_buy);
         mTextMinSell = (TextView) root.findViewById(R.id.main_summary_sell);
         mTextAvgBuy = (TextView) root.findViewById(R.id.main_summary_avg_buy);
@@ -68,13 +70,14 @@ public class MainFragment extends Fragment implements MainContract.View {
     @Override
     public void drawOrderbook(int marketType, Orderbooks orderbooks) {
         mSectionsPagerAdapter.setOrderbooks(marketType, orderbooks);
+
     }
 
     @Override
     public void setTextMaxBuy(String marketName, long price) {
             String fullMsg = String.format(getString(R.string.main_summary_buy), marketName, String.format("%,d", price));
             final SpannableStringBuilder sp = new SpannableStringBuilder(fullMsg);
-            int start = 11;
+            int start = 7;
             int end = fullMsg.indexOf("(");
 
             sp.setSpan(
@@ -93,7 +96,7 @@ public class MainFragment extends Fragment implements MainContract.View {
     public void setTextMinSell(String marketName, long price) {
         String fullMsg = String.format(getString(R.string.main_summary_sell), marketName, String.format("%,d",price ));
         final SpannableStringBuilder sp = new SpannableStringBuilder(fullMsg);
-        int start = 11;
+        int start = 7;
         int end = fullMsg.indexOf("(");
 
         sp.setSpan(

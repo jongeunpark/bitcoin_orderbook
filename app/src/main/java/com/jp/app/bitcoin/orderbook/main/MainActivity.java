@@ -15,6 +15,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.jp.app.bitcoin.orderbook.BaseActivity;
 import com.jp.app.bitcoin.orderbook.R;
@@ -30,6 +34,7 @@ public class MainActivity extends BaseActivity
     public static final String KORBIT = "KORBIT";
     public static final String COINONE = "COINONE";
     public static final String BITHUMB = "BITHUMB";
+    private InterstitialAd mInterstitialAd;
 
     public static final int HELP_ACTIVITY_REQUESTCODE = 101;
     private MainPresenter mainPresenter;
@@ -40,6 +45,18 @@ public class MainActivity extends BaseActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.main_act);
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-6722966527757194/4352411868");
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                requestNewInterstitial();
+                finishMyApp();
+            }
+        });
+
+        requestNewInterstitial();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -78,11 +95,28 @@ public class MainActivity extends BaseActivity
             title.setText(getString(getApplicationInfo().labelRes));
         }
 
-    }
 
+        requestNewInterstitial();
+
+    }
+    private void requestNewInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        mInterstitialAd.loadAd(adRequest);
+
+    }
 
     @Override
     public void onBackPressed() {
+
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
+
+            finishMyApp();
+        }
+    }
+    public void finishMyApp(){
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -131,13 +165,52 @@ public class MainActivity extends BaseActivity
             openWeb( "https://coinone.co.kr/");
         } else if (id == R.id.main_nav_bithumb) {
             openWeb( "https://www.bithumb.com/");
+        } else if (id == R.id.main_nav_etc_orderbook){
+            openEtcOrderbook();
+        } else if (id == R.id.main_nav_eth_orderbook){
+            openEthOrderbook();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    private void openEthOrderbook(){
+        try {
+            Intent intent = getPackageManager().getLaunchIntentForPackage("com.jp.app.ethereum.orderbook");
 
+            startActivity(intent);
+        }catch(Exception e){
+            try {
+                Intent intent2 = new Intent(Intent.ACTION_VIEW);
+                intent2.setData(Uri
+                        .parse("market://details?id=com.jp.app.ethereum.orderbook"));
+                startActivity(intent2);
+            } catch (Exception e2) {
+                // TODO Auto-generated catch block
+                e2.printStackTrace();
+            }
+        }
+
+    }
+    private void openEtcOrderbook(){
+        try {
+            Intent intent = getPackageManager().getLaunchIntentForPackage("com.jp.app.etc.orderbook");
+
+            startActivity(intent);
+        }catch(Exception e){
+            try {
+                Intent intent2 = new Intent(Intent.ACTION_VIEW);
+                intent2.setData(Uri
+                        .parse("market://details?id=com.jp.app.etc.orderbook"));
+                startActivity(intent2);
+            } catch (Exception e2) {
+                // TODO Auto-generated catch block
+                e2.printStackTrace();
+            }
+        }
+
+    }
     public void openHelp() {
         startActivityForResult(new Intent(this, HelpActivity.class), MainActivity.HELP_ACTIVITY_REQUESTCODE);
         ActivityAnimator a = new ActivityAnimator();
