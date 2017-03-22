@@ -1,6 +1,9 @@
 package com.jp.app.bitcoin.orderbook.views.adapters;
 
 import android.content.Context;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +12,7 @@ import android.widget.TextView;
 
 import com.jp.app.bitcoin.orderbook.R;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.jp.app.bitcoin.orderbook.data.OrderItem;
@@ -42,11 +46,45 @@ public class OrderbookAdapter extends ArrayAdapter<OrderItem> {
 
         OrderItem orderItem = getItem(position);
         if(orderItem.getOrder_type() == OrderItem.ORDER_TYPE.ASK){
-            askQty.setText(orderItem.getQty().toPlainString());
+            String text = orderItem.getQty().setScale(4, BigDecimal.ROUND_DOWN).toPlainString();
+            final SpannableStringBuilder sp = new SpannableStringBuilder(text);
+            int start = text.indexOf(".");
+
+            if(start >= 1){
+                sp.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.blue_background)), 0
+                        , start-1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                sp.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.blue_background_light)), start+1
+                        , text.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                sp.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.icons)), start
+                        , start+1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            }else{
+                sp.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.blue_background)), 0
+                        , text.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+
+            askQty.setText(sp);
+
             price.setTextColor(mContext.getResources().getColor(R.color.blue_background));
         }else{
+            String text = orderItem.getQty().setScale(4, BigDecimal.ROUND_DOWN).toPlainString();
+            final SpannableStringBuilder sp = new SpannableStringBuilder(text);
+            int start = text.indexOf(".");
 
-            bidQty.setText(orderItem.getQty().toPlainString());
+            if(start >= 1){
+                sp.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.red_background)), 0
+                        , start-1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                sp.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.red_background_light)), start+1
+                        , text.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                sp.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.icons)), start
+                        , start+1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            }else{
+                sp.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.blue_background)), 0
+                        , text.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+
+            bidQty.setText(sp);
             price.setTextColor(mContext.getResources().getColor(R.color.red_background));
 
         }
