@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.AdListener;
@@ -45,7 +46,7 @@ public class MainActivity extends BaseActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.main_act);
-
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

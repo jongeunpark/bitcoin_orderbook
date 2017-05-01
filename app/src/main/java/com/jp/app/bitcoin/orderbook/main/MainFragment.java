@@ -1,6 +1,8 @@
 package com.jp.app.bitcoin.orderbook.main;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -34,6 +36,11 @@ public class MainFragment extends Fragment implements MainContract.View {
     private TextView mTextAvgBuy;
     private TextView mTextTitle;
 
+    private TextView mTextRefresh;
+    private Handler mHandle;
+    private Runnable mRunnable;
+    private MyCount counter;
+
 
     public static MainFragment newInstance() {
         return new MainFragment();
@@ -43,6 +50,14 @@ public class MainFragment extends Fragment implements MainContract.View {
     public void onResume() {
         super.onResume();
         mPresenter.start();
+        mRunnable.run();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mHandle.removeCallbacks(mRunnable);
+        stopCountDown();
     }
 
     @Nullable
@@ -60,11 +75,43 @@ public class MainFragment extends Fragment implements MainContract.View {
         mTextMinSell = (TextView) root.findViewById(R.id.main_summary_sell);
         mTextAvgBuy = (TextView) root.findViewById(R.id.main_summary_avg_buy);
         mTextAvgSell = (TextView) root.findViewById(R.id.main_summary_avg_sell);
-        mPresenter.getOrderbook(getActivity());
+        mTextRefresh = (TextView) root.findViewById(R.id.main_text_refresh);
+
+
         return root;
     }
+    @Override
+    public void onActivityCreated(Bundle bundle) {
+        super.onActivityCreated(bundle);
 
+        mHandle = new Handler();
+        mRunnable = new Runnable() {
 
+            @Override
+            public void run() {
+
+                startCountDown();
+                mPresenter.getOrderbook(getActivity());
+                mHandle.postDelayed(mRunnable, 30000);
+            }
+        };
+    }
+    private void stopCountDown() {
+        if (counter != null) {
+            counter.cancel();
+
+            counter = null;
+        }
+    }
+
+    private void startCountDown() {
+        if (counter == null) {
+
+            counter = new MyCount(30000, 1000);
+        }
+
+        counter.start();
+    }
 
 
     @Override
@@ -121,5 +168,24 @@ public class MainFragment extends Fragment implements MainContract.View {
     @Override
     public void setPresenter(MainContract.Presenter presenter) {
         mPresenter = checkNotNull(presenter);
+    }
+    public class MyCount extends CountDownTimer {
+
+        public MyCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onFinish() {
+
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+
+
+            mTextRefresh.setText((millisUntilFinished / 1000) + " " + getString(R.string.refresh));
+
+        }
     }
 }
