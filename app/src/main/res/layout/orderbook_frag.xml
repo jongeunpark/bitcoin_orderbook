@@ -49,15 +49,22 @@
         android:background="@color/divider" />
 
 
+    <ListView
+        android:id="@+id/orderbook_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:fadingEdge="none" />
 
-        <ListView
-            android:id="@+id/orderbook_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:divider="@null"
-            android:dividerHeight="0dp"
-            android:fadingEdge="none" />
-
-
+    <TextView
+        android:id="@+id/orderbook_error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.8"
+        android:gravity="center"
+        android:textColor="@color/primary_text"
+        android:textSize="16dp"
+        android:visibility="gone" />
 
 </LinearLayout>

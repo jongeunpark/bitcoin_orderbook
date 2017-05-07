@@ -14,12 +14,16 @@
     <string name="donation">기부하기</string>
     <string name="refresh">초 뒤, 새로고침</string>
 
-    <string name="direct">바로가기</string>
+    <string name="direct">거래소 바로가기</string>
     <string name="korbit">KORBIT</string>
     <string name="coinone">COINONE</string>
     <string name="bithumb">BITHUMB</string>
-    <string name="eth_orderbook">이더리움 오더북 (자매품)</string>
-    <string name="etc_orderbook">ETC 오더북 (자매품)</string>
+    <string name="download">앱 바로가기</string>
+    <string name="btc_orderbook">비트코인 오더북 </string>
+    <string name="eth_orderbook">이더리움 오더북 </string>
+    <string name="etc_orderbook">ETC 오더북</string>
+    <string name="dash_orderbook">대시 오더북</string>
+    <string name="ltc_orderbook">라이트코인 오더북</string>
     <string name="orderbook_title_ask_qty">매도잔량</string>
     <string name="orderbook_title_bid_qty">매수잔량</string>
     <string name="orderbook_title_price">주문가격</string>
@@ -27,4 +31,7 @@
     <string name="main_summary_sell">매도 최저가: %2$s (%1$s)</string>
     <string name="main_summary_avg_buy">매수가 평균: %1$s</string>
     <string name="main_summary_avg_sell">매도가 평균: %1$s</string>
+    <string name="errro_0">데이터를 불러오지 못했습니다.\n\n잠시 후 재시도 해주세요.</string>
+    <string name="errro_404_200">데이터를 불러오지 못했습니다.\n\n좌측 [문의하기] 버튼을 통해 문제를 알려주세요.\n\n업데이트 하겠습니다.</string>
+    <string name="errro_etc">데이터를 불러오지 못했습니다.\n\n좌측 [문의하기] 버튼을 통해 문제를 알려주세요.\n\n업데이트 하겠습니다.</string>
 </resources>

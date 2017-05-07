@@ -86,6 +86,7 @@ public class MainPresenter implements MainContract.Presenter {
         mBithumbFragment.clearData();
         mCoinoneFragment.clearData();
         mKorbitFragment.clearData();
+        mMainView.clearData();
 
 //        getInteralCoinoneOrderbook(context);
 //        getInteralBithumbOrderbook(context);

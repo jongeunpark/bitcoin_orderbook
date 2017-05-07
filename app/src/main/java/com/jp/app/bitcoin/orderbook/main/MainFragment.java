@@ -84,6 +84,10 @@ public class MainFragment extends Fragment implements MainContract.View {
     public void onActivityCreated(Bundle bundle) {
         super.onActivityCreated(bundle);
 
+        initHandler();
+    }
+
+    private void initHandler(){
         mHandle = new Handler();
         mRunnable = new Runnable() {
 
@@ -162,6 +166,21 @@ public class MainFragment extends Fragment implements MainContract.View {
     @Override
     public boolean isActive() {
         return isAdded();
+    }
+
+    @Override
+    public void clearData() {
+        mHandle.removeCallbacks(mRunnable);
+        stopCountDown();
+        initHandler();
+        mPresenter.start();
+        mRunnable.run();
+
+    }
+
+    @Override
+    public void drawError(int marketType, int ErrorCode) {
+        mSectionsPagerAdapter.setError(marketType, ErrorCode);
     }
 
 

@@ -26,7 +26,13 @@ public interface MainContract {
 
         void setTextAvgSell(long price);
 
+
         boolean isActive();
+
+        void clearData();
+
+        void drawError(int marketType, int ErrorCode);
+
 
     }
 
@@ -40,6 +46,7 @@ public interface MainContract {
         void setFirstTime(SharedPreferences pref);
 
         void getOrderbook(Context context);
+
 
         void getInteralCoinoneOrderbook(Context context);
 

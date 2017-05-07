@@ -145,34 +145,56 @@ public class MainActivity extends BaseActivity
             openWeb("https://coinone.co.kr/");
         } else if (id == R.id.main_nav_bithumb) {
             openWeb("https://www.bithumb.com/");
-        } else if (id == R.id.main_nav_etc_orderbook) {
+        }  else if (id == R.id.main_nav_etc_orderbook) {
             openEtcOrderbook();
         } else if (id == R.id.main_nav_eth_orderbook) {
             openEthOrderbook();
+        } else if (id == R.id.main_nav_dash_orderbook) {
+            openDashOrderbook();
+        } else if (id == R.id.main_nav_ltc_orderbook) {
+            openLtcOrderbook();
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    private void openEthOrderbook() {
+    private void openLtcOrderbook() {
         try {
-            Intent intent = getPackageManager().getLaunchIntentForPackage("com.jp.app.ethereum.orderbook");
+            Intent intent = getPackageManager().getLaunchIntentForPackage("com.jp.app.ltc.orderbook");
 
             startActivity(intent);
         } catch (Exception e) {
             try {
                 Intent intent2 = new Intent(Intent.ACTION_VIEW);
                 intent2.setData(Uri
-                        .parse("market://details?id=com.jp.app.ethereum.orderbook"));
+                        .parse("market://details?id=com.jp.app.ltc.orderbook"));
                 startActivity(intent2);
             } catch (Exception e2) {
                 // TODO Auto-generated catch block
                 e2.printStackTrace();
             }
         }
+    }
 
+    private void openDashOrderbook() {
+        try {
+            Intent intent = getPackageManager().getLaunchIntentForPackage("com.jp.app.dash.orderbook");
+
+            startActivity(intent);
+        } catch (Exception e) {
+            try {
+                Intent intent2 = new Intent(Intent.ACTION_VIEW);
+                intent2.setData(Uri
+                        .parse("market://details?id=com.jp.app.dash.orderbook"));
+                startActivity(intent2);
+            } catch (Exception e2) {
+                // TODO Auto-generated catch block
+                e2.printStackTrace();
+            }
+        }
     }
 
     private void openEtcOrderbook() {
@@ -194,6 +216,43 @@ public class MainActivity extends BaseActivity
 
     }
 
+    private void openEthOrderbook() {
+        try {
+            Intent intent = getPackageManager().getLaunchIntentForPackage("com.jp.app.ethereum.orderbook");
+
+            startActivity(intent);
+        } catch (Exception e) {
+            try {
+                Intent intent2 = new Intent(Intent.ACTION_VIEW);
+                intent2.setData(Uri
+                        .parse("market://details?id=com.jp.app.ethereum.orderbook"));
+                startActivity(intent2);
+            } catch (Exception e2) {
+                // TODO Auto-generated catch block
+                e2.printStackTrace();
+            }
+        }
+
+    }
+
+    private void openBtcOrderbook() {
+        try {
+            Intent intent = getPackageManager().getLaunchIntentForPackage("com.jp.app.bitcoin.orderbook");
+
+            startActivity(intent);
+        } catch (Exception e) {
+            try {
+                Intent intent2 = new Intent(Intent.ACTION_VIEW);
+                intent2.setData(Uri
+                        .parse("market://details?id=com.jp.app.bitcoin.orderbook"));
+                startActivity(intent2);
+            } catch (Exception e2) {
+                // TODO Auto-generated catch block
+                e2.printStackTrace();
+            }
+        }
+
+    }
     public void openHelp() {
         startActivityForResult(new Intent(this, HelpActivity.class), MainActivity.HELP_ACTIVITY_REQUESTCODE);
         ActivityAnimator a = new ActivityAnimator();

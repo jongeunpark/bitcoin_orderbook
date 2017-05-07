@@ -74,6 +74,11 @@ public class OrderbookPresenter implements OrderbookContract.Presenter {
     }
 
     @Override
+    public void setError(int erroCode) {
+        mOrderbookView.drawError(erroCode);
+    }
+
+    @Override
     public void clearData() {
         orderItemList = null;
     }
