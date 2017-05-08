@@ -18,7 +18,7 @@ public class OrderbookPresenter implements OrderbookContract.Presenter {
     private static final int MAX = 5;
     private List<OrderItem> orderItemList;
     private OrderbookContract.View mOrderbookView;
-
+    private int mErrorCode = -1;
     public OrderbookPresenter(@NonNull OrderbookContract.View orderbookView) {
 
         this.mOrderbookView = orderbookView;
@@ -75,7 +75,10 @@ public class OrderbookPresenter implements OrderbookContract.Presenter {
 
     @Override
     public void setError(int erroCode) {
-        mOrderbookView.drawError(erroCode);
+        mErrorCode = erroCode;
+        if (mOrderbookView.isActive()) {
+            mOrderbookView.drawError(erroCode);
+        }
     }
 
     @Override
@@ -87,6 +90,10 @@ public class OrderbookPresenter implements OrderbookContract.Presenter {
     public void drawListAvailable() {
         if(orderItemList != null && orderItemList.size() > 0){
             mOrderbookView.drawList(orderItemList);
+        }else{
+            if(mErrorCode != -1) {
+                mOrderbookView.drawError(mErrorCode);
+            }
         }
 
     }

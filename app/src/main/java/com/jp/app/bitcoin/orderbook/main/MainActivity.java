@@ -16,16 +16,21 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.jp.app.bitcoin.orderbook.BaseActivity;
+import com.jp.app.bitcoin.orderbook.BuildConfig;
 import com.jp.app.bitcoin.orderbook.R;
 import com.jp.app.bitcoin.orderbook.help.HelpActivity;
 import com.jp.app.bitcoin.orderbook.util.ActivityAnimator;
 import com.jp.app.bitcoin.orderbook.util.ActivityUtils;
+
+import io.fabric.sdk.android.Fabric;
 
 
 public class MainActivity extends BaseActivity
@@ -44,6 +49,7 @@ public class MainActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics.Builder().core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build()).build());
 
         setContentView(R.layout.main_act);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
