@@ -1,35 +1,27 @@
 {
   "project_info": {
-    "project_number": "546761729797",
-    "firebase_url": "https://andbitcoinorderbook.firebaseio.com",
-    "project_id": "andbitcoinorderbook",
-    "storage_bucket": "andbitcoinorderbook.appspot.com"
+    "project_number": "1033735368143",
+    "firebase_url": "https://btc-price-65a8d.firebaseio.com",
+    "project_id": "btc-price-65a8d",
+    "storage_bucket": "btc-price-65a8d.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:546761729797:android:b56e30c3fc33adc2",
+        "mobilesdk_app_id": "1:1033735368143:android:b56e30c3fc33adc2",
         "android_client_info": {
           "package_name": "com.jp.app.bitcoin.orderbook"
         }
       },
       "oauth_client": [
         {
-          "client_id": "546761729797-trrbhee71b1jpnr2fpvj0sri4nrmggr0.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.jp.app.bitcoin.orderbook",
-            "certificate_hash": "5C62D6ED8DBF85CCDDF90BE45379DCF3DC809FB4"
-          }
-        },
-        {
-          "client_id": "546761729797-dg2vqd7p5m0jl572kk3qck2ihpr9mck4.apps.googleusercontent.com",
+          "client_id": "1033735368143-94c9fuenv42m5vi8pmed9r7isb40rtc4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC6o_FR4vGsvlOCjwW-ekaZGzzTMAQDUvQ"
+          "current_key": "AIzaSyA0I4vtqFV3Mlo57v04WxWvAAlrrcl-VDE"
         }
       ],
       "services": {
@@ -37,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "546761729797-dg2vqd7p5m0jl572kk3qck2ihpr9mck4.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2

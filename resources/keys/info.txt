@@ -1,0 +1,1 @@
+keytool -list -v -keystore bitcoin_price.jks 
