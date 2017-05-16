@@ -7,6 +7,9 @@ import com.jp.app.bitcoin.orderbook.BasePresenter;
 import com.jp.app.bitcoin.orderbook.BaseView;
 import com.jp.app.bitcoin.orderbook.orderbook.OrderbookFragment;
 
+import java.util.List;
+
+import jp.com.lib.orderbook.network.datas.LastPrice;
 import jp.com.lib.orderbook.network.datas.Orderbooks;
 
 /**
@@ -17,6 +20,8 @@ public interface MainContract {
 
 
         void drawOrderbook(int marketType, Orderbooks orderbooks);
+
+        void drawPrice(int marketType,  List<LastPrice> priceItem);
 
         void setTextMaxBuy(String marketName, long price);
 
@@ -59,6 +64,12 @@ public interface MainContract {
         void getBithumbOrderbook(Context context);
 
         void getKorbitOrderbook(Context context);
+
+        void getBtc38LastPrice(Context context);
+
+        void getPoloniexLastPrice(Context context);
+
+        void getKrakenLastPrice(Context context);
 
         void calSummary();
 

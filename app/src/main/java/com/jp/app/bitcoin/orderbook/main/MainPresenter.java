@@ -8,13 +8,20 @@ import android.util.Log;
 
 import com.jp.app.bitcoin.orderbook.orderbook.OrderbookFragment;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import jp.com.lib.orderbook.network.datas.LastPrice;
 import jp.com.lib.orderbook.network.datas.Orderbooks;
+import jp.com.lib.orderbook.network.listeners.LastPriceListener;
 import jp.com.lib.orderbook.network.listeners.OrderBooksListener;
+import jp.com.lib.orderbook.network.services.etc.Btc38LastApiImpl;
+import jp.com.lib.orderbook.network.services.etc.KrakenLastApiImpl;
+import jp.com.lib.orderbook.network.services.etc.LastApi;
+import jp.com.lib.orderbook.network.services.etc.PoloniexLastApiImpl;
 import jp.com.lib.orderbook.network.services.exteral.BithumbPublicApiImpl;
 import jp.com.lib.orderbook.network.services.exteral.CoinonePublicApiImpl;
 import jp.com.lib.orderbook.network.services.exteral.KorbitPublicApiImpl;
@@ -37,8 +44,11 @@ public class MainPresenter implements MainContract.Presenter {
 
     private boolean isLoading = false;
 
-    private OrderbookFragment mCoinoneFragment, mBithumbFragment, mKorbitFragment;
-
+    private OrderbookFragment mCoinoneFragment, mBithumbFragment, mKorbitFragment, mEtcFragment;
+    private boolean mBtc38Able = false;
+    private boolean mPoloAble = false;
+    private boolean mKrakenAble = false;
+    private List<LastPrice> mLastPrice;
     public MainPresenter(@NonNull MainContract.View mainView) {
 
         this.mMainView = mainView;
@@ -63,11 +73,11 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public OrderbookFragment[] generateFragments() {
-        mKorbitFragment = OrderbookFragment.newInstance(OrderbookFragment.MARKET_TYPE_KORBIT);
-        mCoinoneFragment = OrderbookFragment.newInstance(OrderbookFragment.MARKET_TYPE_COINONE);
-        mBithumbFragment = OrderbookFragment.newInstance(OrderbookFragment.MARKET_TYPE_BITHUMB);
-
-        return new OrderbookFragment[]{mKorbitFragment, mCoinoneFragment, mBithumbFragment};
+        mKorbitFragment = OrderbookFragment.newInstance(OrderbookFragment.MARKET_TYPE_KORBIT, OrderbookFragment.VIEW_TYPE_ORDERBOOK);
+        mCoinoneFragment = OrderbookFragment.newInstance(OrderbookFragment.MARKET_TYPE_COINONE, OrderbookFragment.VIEW_TYPE_ORDERBOOK);
+        mBithumbFragment = OrderbookFragment.newInstance(OrderbookFragment.MARKET_TYPE_BITHUMB, OrderbookFragment.VIEW_TYPE_ORDERBOOK);
+        mEtcFragment = OrderbookFragment.newInstance(OrderbookFragment.MARKET_TYPE_ETC, OrderbookFragment.VIEW_TYPE_PRICE);
+        return new OrderbookFragment[]{mKorbitFragment, mCoinoneFragment, mBithumbFragment, mEtcFragment};
     }
 
 
@@ -86,6 +96,8 @@ public class MainPresenter implements MainContract.Presenter {
         mBithumbFragment.clearData();
         mCoinoneFragment.clearData();
         mKorbitFragment.clearData();
+        mLastPrice = new ArrayList<LastPrice>();
+        mEtcFragment.clearDataPrice();
         mMainView.clearData();
 
 //        getInteralCoinoneOrderbook(context);
@@ -94,6 +106,9 @@ public class MainPresenter implements MainContract.Presenter {
         getCoinoneOrderbook(context);
         getBithumbOrderbook(context);
         getKorbitOrderbook(context);
+        getBtc38LastPrice(context);
+        getPoloniexLastPrice(context);
+        getKrakenLastPrice(context);
     }
 
     @Override
@@ -282,6 +297,83 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
+    public void getBtc38LastPrice(Context context) {
+        mBtc38Able = false;
+        LastApi lastPrice = Btc38LastApiImpl.getInstance(context);
+        try {
+            lastPrice.getListPrice("btc", new LastPriceListener() {
+                @Override
+                public void onSuccess(LastPrice lastPrice) {
+                    checkPriceDraw(lastPrice);
+                }
+
+                @Override
+                public void onFailure(int httpStatusCode, Throwable throwable) {
+                    LastPrice lastPrice = new LastPrice();
+                    lastPrice.setCode(LastPrice.CODE_BTC38);
+                    lastPrice.setPrice(new BigDecimal(0));
+                    lastPrice.setCurrency(LastPrice.CURRENCY_CNY);
+                    checkPriceDraw(lastPrice);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void getPoloniexLastPrice(Context context) {
+        mPoloAble = false;
+        LastApi lastPrice = PoloniexLastApiImpl.getInstance(context);
+        try {
+            lastPrice.getListPrice("USDT_BTC", new LastPriceListener() {
+                @Override
+                public void onSuccess(LastPrice lastPrice) {
+                    checkPriceDraw(lastPrice);
+                }
+
+                @Override
+                public void onFailure(int httpStatusCode, Throwable throwable) {
+                    LastPrice lastPrice = new LastPrice();
+                    lastPrice.setCurrency(LastPrice.CURRENCY_USD);
+                    lastPrice.setCode(LastPrice.CODE_POLONIEX);
+                    lastPrice.setPrice(new BigDecimal(0));
+
+                    checkPriceDraw(lastPrice);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void getKrakenLastPrice(Context context) {
+        mKrakenAble = false;
+        LastApi lastPrice = KrakenLastApiImpl.getInstance(context);
+        try {
+            lastPrice.getListPrice("XBTEUR", new LastPriceListener() {
+                @Override
+                public void onSuccess(LastPrice lastPrice) {
+                    checkPriceDraw(lastPrice);
+                }
+
+                @Override
+                public void onFailure(int httpStatusCode, Throwable throwable) {
+                    LastPrice lastPrice = new LastPrice();
+                    lastPrice.setCurrency(LastPrice.CURRENCY_EUR);
+                    lastPrice.setCode(LastPrice.CODE_KRAKEN);
+                    lastPrice.setPrice(new BigDecimal(0));
+
+                    checkPriceDraw(lastPrice);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void calSummary() {
         class Order {
             String marketName;
@@ -373,6 +465,26 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void start() {
+
+    }
+
+    private void checkPriceDraw(LastPrice price){
+        if(mBtc38Able == false || mPoloAble == false || mKrakenAble == false){
+            if(price.getCode() == LastPrice.CODE_BTC38){
+                mBtc38Able = true;
+                mLastPrice.add(price);
+            }else if(price.getCode() == LastPrice.CODE_POLONIEX){
+                mPoloAble = true;
+                mLastPrice.add(price);
+            }else if(price.getCode() == LastPrice.CODE_KRAKEN){
+                mKrakenAble = true;
+                mLastPrice.add(price);
+            }
+        }
+        if(mBtc38Able && mPoloAble && mKrakenAble){
+            mMainView.drawPrice(OrderbookFragment.MARKET_TYPE_ETC, mLastPrice);
+
+        }
 
     }
 }

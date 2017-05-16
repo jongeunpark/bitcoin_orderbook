@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.jp.app.bitcoin.orderbook.data.OrderItem;
 
+import jp.com.lib.orderbook.network.datas.LastPrice;
 import jp.com.lib.orderbook.network.datas.Orderbooks;
 
 /**
@@ -23,16 +24,23 @@ public interface OrderbookContract {
 
         void drawError(int erroCode);
 
+        void clearDataPrice();
+
+        void drawDataPrice(List<LastPrice> priceItemList);
+
 
     }
 
     interface Presenter extends BasePresenter {
         void setOrderbook(Orderbooks orderbooks);
-
+        void setPrice(List<LastPrice> priceItemList);
         void setError(int erroCode);
 
         void clearData();
+        void clearPriceData();
+
 
         void drawListAvailable();
+        void drawPriceAvailable();
     }
 }

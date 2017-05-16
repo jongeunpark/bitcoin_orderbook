@@ -54,7 +54,10 @@
                 android:id="@+id/main_nav_ltc_orderbook"
 
                 android:title="@string/ltc_orderbook" />
+            <item
+                android:id="@+id/main_nav_xrp_orderbook"
 
+                android:title="@string/xrp_orderbook" />
             <item
                 android:id="@+id/main_nav_dash_orderbook"
 

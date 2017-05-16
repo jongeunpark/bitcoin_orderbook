@@ -8,6 +8,8 @@ import java.util.Comparator;
 import java.util.List;
 
 import com.jp.app.bitcoin.orderbook.data.OrderItem;
+
+import jp.com.lib.orderbook.network.datas.LastPrice;
 import jp.com.lib.orderbook.network.datas.Orderbook;
 import jp.com.lib.orderbook.network.datas.Orderbooks;
 
@@ -17,6 +19,7 @@ import jp.com.lib.orderbook.network.datas.Orderbooks;
 public class OrderbookPresenter implements OrderbookContract.Presenter {
     private static final int MAX = 5;
     private List<OrderItem> orderItemList;
+    private List<LastPrice> mPriceItemList;
     private OrderbookContract.View mOrderbookView;
     private int mErrorCode = -1;
     public OrderbookPresenter(@NonNull OrderbookContract.View orderbookView) {
@@ -74,6 +77,15 @@ public class OrderbookPresenter implements OrderbookContract.Presenter {
     }
 
     @Override
+    public void setPrice(List<LastPrice> priceItemList) {
+        mPriceItemList = priceItemList;
+        if (mOrderbookView.isActive()) {
+            mOrderbookView.drawDataPrice(priceItemList);
+
+        }
+    }
+
+    @Override
     public void setError(int erroCode) {
         mErrorCode = erroCode;
         if (mOrderbookView.isActive()) {
@@ -87,6 +99,11 @@ public class OrderbookPresenter implements OrderbookContract.Presenter {
     }
 
     @Override
+    public void clearPriceData() {
+        mPriceItemList = null;
+    }
+
+    @Override
     public void drawListAvailable() {
         if(orderItemList != null && orderItemList.size() > 0){
             mOrderbookView.drawList(orderItemList);
@@ -96,5 +113,16 @@ public class OrderbookPresenter implements OrderbookContract.Presenter {
             }
         }
 
+    }
+
+    @Override
+    public void drawPriceAvailable() {
+        if(mPriceItemList != null && mPriceItemList.size() > 0){
+            mOrderbookView.drawDataPrice(mPriceItemList);
+        }else{
+            if(mErrorCode != -1) {
+                mOrderbookView.drawError(mErrorCode);
+            }
+        }
     }
 }

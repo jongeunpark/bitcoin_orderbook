@@ -24,6 +24,7 @@
     <string name="etc_orderbook">ETC 오더북</string>
     <string name="dash_orderbook">대시 오더북</string>
     <string name="ltc_orderbook">라이트코인 오더북</string>
+    <string name="xrp_orderbook">리플 오더북</string>
     <string name="orderbook_title_ask_qty">매도잔량</string>
     <string name="orderbook_title_bid_qty">매수잔량</string>
     <string name="orderbook_title_price">주문가격</string>
@@ -34,4 +35,14 @@
     <string name="errro_0">데이터를 불러오지 못했습니다.\n\n잠시 후 재시도 해주세요.</string>
     <string name="errro_404_200">데이터를 불러오지 못했습니다.\n\n좌측 [문의하기] 버튼을 통해 문제를 알려주세요.\n\n업데이트 하겠습니다.</string>
     <string name="errro_etc">데이터를 불러오지 못했습니다.\n\n좌측 [문의하기] 버튼을 통해 문제를 알려주세요.\n\n업데이트 하겠습니다.</string>
+
+    <string name="code_poloniex">POLONIEX</string>
+    <string name="code_btc38">BTC38</string>
+    <string name="code_kraken">KRAKEN</string>
+
+    <string name="currency_usd">USD(미화)</string>
+    <string name="currency_eur">EUR(유로화)</string>
+    <string name="currency_cny">CNY(위엔화)</string>
+    <string name="currency_jpy">JPY(엔화)</string>
+    <string name="error_price">가격 정보를 불러오지 못했습니다</string>
 </resources>

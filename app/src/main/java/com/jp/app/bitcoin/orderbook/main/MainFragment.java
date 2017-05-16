@@ -17,7 +17,10 @@ import android.widget.TextView;
 import com.jp.app.bitcoin.orderbook.R;
 import com.jp.app.bitcoin.orderbook.views.adapters.SectionsPagerAdapter;
 
+import java.util.List;
+
 import github.chenupt.springindicator.SpringIndicator;
+import jp.com.lib.orderbook.network.datas.LastPrice;
 import jp.com.lib.orderbook.network.datas.Orderbooks;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -122,6 +125,11 @@ public class MainFragment extends Fragment implements MainContract.View {
     public void drawOrderbook(int marketType, Orderbooks orderbooks) {
         mSectionsPagerAdapter.setOrderbooks(marketType, orderbooks);
 
+    }
+
+    @Override
+    public void drawPrice(int marketType, List<LastPrice> priceItem) {
+        mSectionsPagerAdapter.setPrice(marketType, priceItem);
     }
 
     @Override
