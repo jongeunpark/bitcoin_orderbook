@@ -144,7 +144,56 @@ public class BithumbPublicApiImpl implements PublickApi {
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, String error, Throwable throwable){
-                listener.onFailure(statusCode, throwable);
+                if(error!= null && error.length() > 0){
+                    int start = error.indexOf("{");
+                    int end = error.lastIndexOf("}");
+                    if(start > -1 && end > start){
+                        String jsonStr = error.substring(start, end+1);
+                        try {
+                            JSONObject response = new JSONObject(jsonStr);
+                            String success = response.getString("status");
+                            if(success.equals("0000")){
+                                JSONObject data = response.getJSONObject("data");
+
+                                JSONArray bids = data.getJSONArray("bids");
+                                JSONArray asks = data.getJSONArray("asks");
+                                Orderbooks orderbooks = new Orderbooks();
+                                for(int i=0; i<bids.length(); i++){
+                                    JSONObject bid = bids.getJSONObject(i);
+                                    BigDecimal qty = new BigDecimal(bid.getString("quantity"));
+                                    BigDecimal price = new BigDecimal(bid.getString("price"));
+                                    Orderbook orderbook = new Orderbook();
+                                    orderbook.setPrice(price);
+                                    orderbook.setQty(qty);
+                                    orderbooks.addBid(orderbook);
+
+                                }
+                                for(int i=0; i<asks.length(); i++){
+                                    JSONObject ask = asks.getJSONObject(i);
+
+                                    BigDecimal qty = new BigDecimal(ask.getString("quantity"));
+                                    BigDecimal price = new BigDecimal(ask.getString("price"));
+                                    Orderbook orderbook = new Orderbook();
+                                    orderbook.setPrice(price);
+                                    orderbook.setQty(qty);
+                                    orderbooks.addAsk(orderbook);
+                                }
+
+                                listener.onSuccess(orderbooks);
+                            }else{
+                                listener.onFailure(statusCode, new Exception("FAIL"));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            listener.onFailure(statusCode, throwable);
+                        }
+                    }else{
+                        listener.onFailure(statusCode, throwable);
+                    }
+                }else{
+                    listener.onFailure(statusCode, throwable);
+                }
+
             }
         };
         HttpSender.sendGetRequest(BASE_URL+""+ORDERBOOK_URL,jsonHttpResponseHandler);
