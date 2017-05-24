@@ -183,7 +183,7 @@ public class BithumbPublicApiImpl implements PublickApi {
                             }else{
                                 listener.onFailure(statusCode, new Exception("FAIL"));
                             }
-                        } catch (JSONException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                             listener.onFailure(statusCode, throwable);
                         }

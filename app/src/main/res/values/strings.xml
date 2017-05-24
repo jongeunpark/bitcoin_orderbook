@@ -45,4 +45,8 @@
     <string name="currency_cny">CNY(위엔화)</string>
     <string name="currency_jpy">JPY(엔화)</string>
     <string name="error_price">가격 정보를 불러오지 못했습니다</string>
+
+    <string name="menu_refresh">오더북 새로고침</string>
+    <string name="menu_chart">차트</string>
+    <string name="chart_info">Poloniex BTC/USDT</string>
 </resources>

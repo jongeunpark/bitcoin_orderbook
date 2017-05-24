@@ -148,7 +148,17 @@ public class MainFragment extends Fragment implements MainContract.View {
 
     @Override
     public void setTextAvgBuy(long price) {
-        mTextAvgBuy.setText(String.format(getString(R.string.main_summary_avg_buy), String.format("%,d", price)));
+        String fullMsg = String.format(getString(R.string.main_summary_avg_buy), String.format("%,d", price));
+        final SpannableStringBuilder sp = new SpannableStringBuilder(fullMsg);
+        int start = 7;
+        int end = fullMsg.length();
+
+        sp.setSpan(
+                new ForegroundColorSpan(getResources().getColor(R.color.red_background)), start
+                , end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        mTextAvgBuy.setText(sp);
+
     }
 
     @Override
@@ -167,7 +177,19 @@ public class MainFragment extends Fragment implements MainContract.View {
 
     @Override
     public void setTextAvgSell(long price) {
-        mTextAvgSell.setText(String.format(getString(R.string.main_summary_avg_sell), String.format("%,d", price)));
+        String fullMsg = String.format(getString(R.string.main_summary_avg_sell), String.format("%,d", price));
+        final SpannableStringBuilder sp = new SpannableStringBuilder(fullMsg);
+        int start = 7;
+        int end = fullMsg.length();
+
+        sp.setSpan(
+                new ForegroundColorSpan(getResources().getColor(R.color.blue_background)), start
+                , end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        mTextAvgSell.setText(sp);
+
+
+
     }
 
 

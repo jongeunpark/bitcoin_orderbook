@@ -1,19 +1,29 @@
 package com.jp.app.bitcoin.orderbook.main;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
@@ -44,8 +54,10 @@ public class MainActivity extends BaseActivity
 
     public static final int HELP_ACTIVITY_REQUESTCODE = 101;
     private MainPresenter mainPresenter;
-
-
+    private FloatingActionButton mFab;
+    private WebView mWebView;
+    private View mViewChart;
+    private View mViewChartTop;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +102,56 @@ public class MainActivity extends BaseActivity
 
             title.setText(getString(getApplicationInfo().labelRes));
         }
+        mViewChart = findViewById(R.id.main_view_chart);
+        mViewChartTop = findViewById(R.id.chart_view_top);
+        mFab = (FloatingActionButton) findViewById(R.id.main_fab_chart);
+        mWebView = (WebView) findViewById(R.id.chart_web_chart);
+        WebSettings set = mWebView.getSettings();
+
+        set.setJavaScriptEnabled(true);
+
+        mWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+
+
+                super.onPageStarted(view, url, favicon);
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+            }
+
+        });
+
+
+
+
+
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(mViewChart.getVisibility() == View.GONE) {
+
+                    mViewChart.setVisibility(View.VISIBLE);
+                    mFab.setVisibility(View.GONE);
+                }
+            }
+        });
+        mViewChartTop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(mViewChart.getVisibility() == View.VISIBLE) {
+
+                    mViewChart.setVisibility(View.GONE);
+                    mFab.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        showWebView();
 
 
     }
@@ -107,7 +169,12 @@ public class MainActivity extends BaseActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if(mViewChart.getVisibility() == View.VISIBLE){
+                mViewChart.setVisibility(View.GONE);
+                mFab.setVisibility(View.VISIBLE);
+            }else {
+                super.onBackPressed();
+            }
         }
     }
 
@@ -124,6 +191,7 @@ public class MainActivity extends BaseActivity
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.menu_main_refresh:
+                showWebView();
                 mainPresenter.getOrderbook(this);
                 return true;
 
@@ -270,6 +338,45 @@ public class MainActivity extends BaseActivity
             }
         }
     }
+    private void showWebView(){
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        float height = (float) ((float) (displayMetrics.heightPixels  - convertDpToPixel(56*2, this)) * 0.9);
+        float width = (float) (displayMetrics.widthPixels * 0.95);
+        String content = "<!-- TradingView Widget BEGIN -->\n" +
+                "<script type=\"text/javascript\" src=\"https://d33t3vvu2t2yu5.cloudfront.net/tv.js\"></script>\n" +
+                "<script type=\"text/javascript\">\n" +
+                "new TradingView.widget({\n" +
+                "  \"width\": "+convertPixelsToDp(width, this)+",\n" +
+                "  \"height\": "+convertPixelsToDp(height/2, this)+",\n" +
+                "  \"symbol\": \"POLONIEX:BTCUSDT\",\n" +
+                "  \"interval\": \"D\",\n" +
+                "  \"timezone\": \"Etc/UTC\",\n" +
+                "  \"theme\": \"White\",\n" +
+                "  \"style\": \"1\",\n" +
+                "  \"locale\": \"en\",\n" +
+                "  \"toolbar_bg\": \"#f1f3f6\",\n" +
+                "  \"enable_publishing\": false,\n" +
+                "  \"hide_top_toolbar\": true,\n" +
+                "  \"save_image\": false,\n" +
+                "  \"hideideas\": true\n" +
+                "});\n" +
+                "</script>\n" +
+                "<!-- TradingView Widget END -->\n";
+        mWebView.loadData(content, "text/html", "UTF-8");
+    }
+    private static float convertDpToPixel(float dp, Context context){
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        float px = dp * ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        return px;
+    }
 
+    private static float convertPixelsToDp(float px, Context context){
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        float dp = px / ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        return dp;
+    }
 
 }
