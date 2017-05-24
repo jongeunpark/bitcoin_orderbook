@@ -18,8 +18,8 @@ android {
         applicationId "com.jp.app.bitcoin.orderbook"
         minSdkVersion 14
         targetSdkVersion 24
-        versionCode 16
-        versionName "1.2.1"
+        versionCode 17
+        versionName "1.3.0"
     }
     buildTypes {
         release {

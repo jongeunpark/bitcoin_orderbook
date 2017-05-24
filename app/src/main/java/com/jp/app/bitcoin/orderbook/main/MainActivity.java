@@ -191,7 +191,7 @@ public class MainActivity extends BaseActivity
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.menu_main_refresh:
-                showWebView();
+
                 mainPresenter.getOrderbook(this);
                 return true;
 
