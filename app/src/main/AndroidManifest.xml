@@ -22,6 +22,13 @@
         </activity>
         <activity
             android:screenOrientation="portrait"
+            android:name=".DonationActivity"
+            android:label="@string/menu_donation"
+            android:theme="@style/AppTheme">
+
+        </activity>
+        <activity
+            android:screenOrientation="portrait"
             android:name=".help.HelpActivity"
             android:theme="@style/Theme.AppCompat.Translucent">
 

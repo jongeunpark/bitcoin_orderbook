@@ -46,7 +46,17 @@
     <string name="currency_jpy">JPY(엔화)</string>
     <string name="error_price">가격 정보를 불러오지 못했습니다</string>
 
-    <string name="menu_refresh">오더북 새로고침</string>
+    <string name="menu_refresh">새로고침</string>
     <string name="menu_chart">차트</string>
     <string name="chart_info">Poloniex BTC/USDT</string>
+    <string name="menu_donation">이 버튼의 용도는..</string>
+    <string name="text_donation">더 좋은 제품을 만드는데 사용하겠습니다.\n\n아래 주소는 코인원에서 사용하는 주소입니다.</string>
+    <string name="donation_btc">BTC 기부 주소</string>
+    <string name="donation_eth">ETH 기부 주소</string>
+    <string name="donation_etc">ETC 기부 주소</string>
+    <string name="donation_btn_copy">복사</string>
+    <string name="donation_address_btc">1N11nqjLtYmpbYMetvegBKEjgkzNvJc8Vp</string>
+    <string name="donation_address_eth">0x82a38d5ced319b85a4d0f87915c3bd351855dff9</string>
+    <string name="donation_address_etc">0xd7f765590b99672bfc11cda19998c5fa0e055726</string>
+    <string name="donation_text_copy">가 복사되었습니다.</string>
 </resources>

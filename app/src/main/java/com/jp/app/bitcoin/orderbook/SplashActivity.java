@@ -1,6 +1,7 @@
 package com.jp.app.bitcoin.orderbook;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -39,7 +40,7 @@ public class SplashActivity extends AwesomeSplash {
 
         requestNewInterstitial();
         configSplash.setBackgroundColor(R.color.primary); //any color you want form colors.xml
-        configSplash.setAnimCircularRevealDuration(1000); //int ms
+        configSplash.setAnimCircularRevealDuration(600); //int ms
         configSplash.setRevealFlagX(Flags.REVEAL_RIGHT);  //or Flags.REVEAL_LEFT
         configSplash.setRevealFlagY(Flags.REVEAL_BOTTOM); //or Flags.REVEAL_TOP
 
@@ -47,7 +48,7 @@ public class SplashActivity extends AwesomeSplash {
 
         //Customize Logo
         configSplash.setLogoSplash(R.mipmap.ic_launcher); //or any other drawable
-        configSplash.setAnimLogoSplashDuration(600); //int ms
+        configSplash.setAnimLogoSplashDuration(400); //int ms
         configSplash.setAnimLogoSplashTechnique(Techniques.Bounce); //choose one form Techniques (ref: https://github.com/daimajia/AndroidViewAnimations)
 
 
@@ -66,7 +67,7 @@ public class SplashActivity extends AwesomeSplash {
         configSplash.setTitleSplash(getString(getApplicationInfo().labelRes));
         configSplash.setTitleTextColor(R.color.icons);
         configSplash.setTitleTextSize(30f); //float value
-        configSplash.setAnimTitleDuration(600);
+        configSplash.setAnimTitleDuration(400);
         configSplash.setAnimTitleTechnique(Techniques.Bounce);
 
     }
@@ -79,11 +80,18 @@ public class SplashActivity extends AwesomeSplash {
 
     @Override
     public void animationsFinished() {
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        } else {
+
+        SharedPreferences pref = getSharedPreferences("BITCOIN_PRICE", MODE_PRIVATE);
+        if(pref.getBoolean("is_first", true)){
             openMainActivity();
+        }else{
+            if (mInterstitialAd.isLoaded()) {
+                mInterstitialAd.show();
+            } else {
+                openMainActivity();
+            }
         }
+
 
     }
     private void openMainActivity(){

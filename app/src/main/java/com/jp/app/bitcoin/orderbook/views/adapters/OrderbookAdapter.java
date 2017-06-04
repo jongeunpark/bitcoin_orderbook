@@ -103,8 +103,15 @@ public class OrderbookAdapter extends ArrayAdapter<OrderItem> {
 
     @Override
     public OrderItem getItem(int positon) {
+        try {
+            return mValues.get(positon);
+        } catch (IndexOutOfBoundsException e) {
+            if (mValues != null && mValues.size() > 0) {
+                return mValues.get(mValues.size() - 1);
+            }
+            return mValues.get(0);
+        }
 
-        return mValues.get(positon);
     }
 
 }
