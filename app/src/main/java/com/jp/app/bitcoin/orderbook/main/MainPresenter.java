@@ -77,7 +77,7 @@ public class MainPresenter implements MainContract.Presenter {
         mCoinoneFragment = OrderbookFragment.newInstance(OrderbookFragment.MARKET_TYPE_COINONE, OrderbookFragment.VIEW_TYPE_ORDERBOOK);
         mBithumbFragment = OrderbookFragment.newInstance(OrderbookFragment.MARKET_TYPE_BITHUMB, OrderbookFragment.VIEW_TYPE_ORDERBOOK);
         mEtcFragment = OrderbookFragment.newInstance(OrderbookFragment.MARKET_TYPE_ETC, OrderbookFragment.VIEW_TYPE_PRICE);
-        return new OrderbookFragment[]{mKorbitFragment, mCoinoneFragment, mBithumbFragment, mEtcFragment};
+        return new OrderbookFragment[]{mCoinoneFragment, mKorbitFragment,mBithumbFragment, mEtcFragment};
     }
 
 

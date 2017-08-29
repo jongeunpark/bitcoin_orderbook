@@ -18,49 +18,33 @@
         android:id="@+id/main_nav_share"
         android:icon="@drawable/ic_share_black_48dp"
         android:title="@string/share" />
-    <item android:title="@string/direct">
-        <menu>
 
-            <item
-                android:id="@+id/main_nav_korbit"
-                android:icon="@drawable/ic_web_black_48dp"
-                android:title="@string/korbit" />
-            <item
-                android:id="@+id/main_nav_coinone"
-                android:icon="@drawable/ic_web_black_48dp"
-                android:title="@string/coinone" />
-
-            <item
-                android:id="@+id/main_nav_bithumb"
-                android:icon="@drawable/ic_web_black_48dp"
-                android:title="@string/bithumb" />
-
-
-        </menu>
-    </item>
     <item android:title="@string/download">
         <menu>
 
+            <item
+                android:id="@+id/main_nav_bch_orderbook"
 
+                android:title="@string/bch_orderbook" />
             <item
                 android:id="@+id/main_nav_eth_orderbook"
-                android:icon="@drawable/ic_phone_android_black_48dp"
+
                 android:title="@string/eth_orderbook" />
             <item
                 android:id="@+id/main_nav_etc_orderbook"
-                android:icon="@drawable/ic_phone_android_black_48dp"
+
                 android:title="@string/etc_orderbook" />
             <item
                 android:id="@+id/main_nav_ltc_orderbook"
-                android:icon="@drawable/ic_phone_android_black_48dp"
+
                 android:title="@string/ltc_orderbook" />
             <item
                 android:id="@+id/main_nav_xrp_orderbook"
-                android:icon="@drawable/ic_phone_android_black_48dp"
+
                 android:title="@string/xrp_orderbook" />
             <item
                 android:id="@+id/main_nav_dash_orderbook"
-                android:icon="@drawable/ic_phone_android_black_48dp"
+
                 android:title="@string/dash_orderbook" />
         </menu>
     </item>

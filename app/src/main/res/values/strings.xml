@@ -19,6 +19,7 @@
     <string name="coinone">COINONE</string>
     <string name="bithumb">BITHUMB</string>
     <string name="download">앱 바로가기</string>
+    <string name="bch_orderbook">BCH 오더북 </string>
     <string name="btc_orderbook">비트코인 오더북 </string>
     <string name="eth_orderbook">이더리움 오더북 </string>
     <string name="etc_orderbook">ETC 오더북</string>

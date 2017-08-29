@@ -32,8 +32,8 @@ public class OrderbookFragment extends Fragment implements OrderbookContract.Vie
      */
     public static final String MARKET_TYPE = "MARKET_TYPE";
     public static final String VIEW_TYPE = "VIEW_TYPE";
-    public static final int MARKET_TYPE_KORBIT = 0;
-    public static final int MARKET_TYPE_COINONE = 1;
+    public static final int MARKET_TYPE_KORBIT = 1;
+    public static final int MARKET_TYPE_COINONE = 0;
     public static final int MARKET_TYPE_BITHUMB = 2;
     public static final int MARKET_TYPE_ETC = 3;
     public static final String VIEW_TYPE_ORDERBOOK = "ORDERBOOK";
