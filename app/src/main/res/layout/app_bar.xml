@@ -40,50 +40,7 @@
             android:layout_height="match_parent"
             android:layout_above="@id/main_adFragment" />
 
-        <LinearLayout
-            android:id="@+id/main_view_chart"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@id/main_adFragment"
-            android:orientation="vertical"
-            android:visibility="gone">
 
-            <RelativeLayout
-                android:id="@+id/chart_view_top"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:alpha="0.7"
-                android:background="#000000">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="16dp"
-                    android:textSize="12dp"
-                    android:textColor="@color/primary_text"
-                    android:text="@string/chart_info"/>
-            </RelativeLayout>
-
-
-            <WebView
-                android:id="@+id/chart_web_chart"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"></WebView>
-        </LinearLayout>
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/main_fab_chart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginBottom="66dp"
-            android:layout_marginLeft="16dp"
-
-            android:src="@drawable/ic_trending_up_white_36dp" />
 
     </RelativeLayout>
 

@@ -17,7 +17,7 @@ import jp.com.lib.orderbook.network.datas.Orderbooks;
  * Created by jp on 16. 10. 21..
  */
 public class OrderbookPresenter implements OrderbookContract.Presenter {
-    private static final int MAX = 5;
+    private static final int MAX = 7;
     private List<OrderItem> orderItemList;
     private List<LastPrice> mPriceItemList;
     private OrderbookContract.View mOrderbookView;
