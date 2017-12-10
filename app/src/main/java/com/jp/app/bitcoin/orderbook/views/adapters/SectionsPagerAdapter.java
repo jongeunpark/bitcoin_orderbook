@@ -52,8 +52,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 return MainActivity.COINONE;
             case OrderbookFragment.MARKET_TYPE_BITHUMB:
                 return MainActivity.BITHUMB;
-            case OrderbookFragment.MARKET_TYPE_ETC:
-                return MainActivity.ETC;
+
 
         }
         return null;

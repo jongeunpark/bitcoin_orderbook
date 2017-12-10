@@ -44,7 +44,7 @@ public class MainPresenter implements MainContract.Presenter {
 
     private boolean isLoading = false;
 
-    private OrderbookFragment mCoinoneFragment, mBithumbFragment, mKorbitFragment, mEtcFragment;
+    private OrderbookFragment mCoinoneFragment, mBithumbFragment, mKorbitFragment;
     private boolean mBtc38Able = false;
     private boolean mPoloAble = false;
     private boolean mKrakenAble = false;
@@ -76,8 +76,8 @@ public class MainPresenter implements MainContract.Presenter {
         mKorbitFragment = OrderbookFragment.newInstance(OrderbookFragment.MARKET_TYPE_KORBIT, OrderbookFragment.VIEW_TYPE_ORDERBOOK);
         mCoinoneFragment = OrderbookFragment.newInstance(OrderbookFragment.MARKET_TYPE_COINONE, OrderbookFragment.VIEW_TYPE_ORDERBOOK);
         mBithumbFragment = OrderbookFragment.newInstance(OrderbookFragment.MARKET_TYPE_BITHUMB, OrderbookFragment.VIEW_TYPE_ORDERBOOK);
-        mEtcFragment = OrderbookFragment.newInstance(OrderbookFragment.MARKET_TYPE_ETC, OrderbookFragment.VIEW_TYPE_PRICE);
-        return new OrderbookFragment[]{mCoinoneFragment, mKorbitFragment,mBithumbFragment, mEtcFragment};
+
+        return new OrderbookFragment[]{mCoinoneFragment, mKorbitFragment,mBithumbFragment};
     }
 
 
@@ -97,7 +97,7 @@ public class MainPresenter implements MainContract.Presenter {
         mCoinoneFragment.clearData();
         mKorbitFragment.clearData();
         mLastPrice = new ArrayList<LastPrice>();
-        mEtcFragment.clearDataPrice();
+
         mMainView.clearData();
 
 //        getInteralCoinoneOrderbook(context);
@@ -106,9 +106,9 @@ public class MainPresenter implements MainContract.Presenter {
         getCoinoneOrderbook(context);
         getBithumbOrderbook(context);
         getKorbitOrderbook(context);
-        getBtc38LastPrice(context);
-        getPoloniexLastPrice(context);
-        getKrakenLastPrice(context);
+//        getBtc38LastPrice(context);
+//        getPoloniexLastPrice(context);
+//        getKrakenLastPrice(context);
     }
 
     @Override
